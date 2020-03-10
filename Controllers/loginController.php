@@ -1,5 +1,5 @@
 <?php
-
+define('ROOT', $_SERVER['DOCUMENT_ROOT']);
 require_once ROOT . '/Utils/Database.php';
 require_once ROOT . '/Models/User.php';
 $errors = [];
