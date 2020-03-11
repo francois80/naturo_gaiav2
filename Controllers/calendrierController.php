@@ -1,4 +1,10 @@
 <?php
+require_once ROOT . '/Utils/Database.php';
+require_once ROOT . '/Models/Appointment.php';
+require_once ROOT . '/Models/Unavailable.php';
+
+$day =  strtotime(date('Y-m-d'));//timmestamp de la date du jour :  1583794800 (pour 2020-03-10)
+echo ' strtotim = '.$day;
 $reloadMonths = false; //variable qui indique si on a posté un mois inférieur au mois actuel
 //tableau des jours
 //$weekDays = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
@@ -7,6 +13,7 @@ $weekDays = ['L','M','M','J','V','S','D'] ;
 $yearMonths = ['Janvier','février','mars','avril','mai','juin','juillet','aôut','septembre','octobre','novembre','décembre'] ;
 //mois en chiffre dans l'année en cours
 $numMonth = date('n');
+$numDay = date('d'); //numéro du jour du mois
 
 //si après le $_POST on a choisi un mois inférieur au mois de l'année en cours, on réaffiche la liste à partir du mois de l'année en cours
 if(!empty($_POST['month']) && !empty($_POST['year'])){
@@ -59,4 +66,33 @@ $daysinMont = date('t', mktime(0,0,0,$currentMonth,1,$selectedYear));// nombre d
 $firstDayinMonthinWeek = date('N', mktime(0,0,0,$currentMonth,1,$selectedYear));//position du jour dans la semaine
 $currentYear = date('Y');//année encours sur 4
 $NextYear = date('Y') +1;//année suivante sur 4
+
+//calcul sur les heures pour l'affichage des rendes-vous dans le planning
+$hmorningBegin = strtotime("09:00:00"); //horaire d'ouverture matin
+$hmorningEnd = strtotime("13:00:00");//horaire fermeture matin au plus tot
+$hmorningEndBis = strtotime("13:30:00");//horaire fermeture matin au plus tard
+$hafternoonBegin = strtotime("14:00:00"); //horaire d'ouverture après-midi
+$hafternoonEnd = strtotime("19:00:00");//horaire fermeture après-midi
+
+echo 'crénaux horaires dispo le matin : de '. gmdate('H:i',$hmorningBegin). ' à '. gmdate('H:i',$hmorningEnd). ' soit '. gmdate('H:i',$hmorningEnd-$hmorningBegin). ' h <br>';
+echo 'crénaux horaires dispo l\'après-midi : de '. gmdate('H:i',$hafternoonBegin). ' à '. gmdate('H:i',$hafternoonEnd). ' soit '. gmdate('H:i',$hafternoonEnd-$hafternoonBegin). ' h<br><br>';
+
+$appointment = new Appointments();
+$unavailable = new Unavailable();
+
+$appointmentsList = $appointment->getAll();
+
+$unavalaibleList = $unavailable->getNotOpen();
+ //var_dump($unavalaibleList);
+if (count($appointmentsList) > 0) {
+   foreach ($appointmentsList AS $key => $appointment_info){
+    echo $appointment_info['JourRDV']. ' '. $appointment_info['heure_debut']. ' '. $appointment_info['heure_fin']. '<br>';
+   }
+}       
+
+if (count($unavalaibleList) > 0) {
+   foreach ($unavalaibleList AS $key => $unavalaible_info){
+    echo $unavalaible_info['day_close']. ' '. $unavalaible_info['day_close_begin']. ' '. $unavalaible_info['day_close_end']. '<br>';
+   }
+}  
 require_once ROOT . '/Views/calendrier.php';

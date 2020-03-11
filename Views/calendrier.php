@@ -64,9 +64,16 @@ for ($year = $currentYear; $year <= $NextYear; $year ++):
                             }
                             //sinon on écrit le numéro du jour dans la cellule
                             else {
+                                
+                               if($numDay >= $day && $numMonth == $currentMonth){ ?> 
+                                  <td class="bg-light"><?= $day ?></td>
+                               <?php
+                               }
+                                else{
                                 ?>
-                                <td class="bg-bisque"><?= $day ?></td>
+                                  <td class="bg-bisque"><a href="#"><?= $day ?></a></td>
                                 <?php
+                                }
                                 $day++;
                             }
                             if ($cell % 7 == 0) {  //si le nombre de cellules est divisible par 7 (corresponodant au nb de jour de la semaine), 7, 14, 21, 28
