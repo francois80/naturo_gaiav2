@@ -1,28 +1,19 @@
 <?php
-
+session_start();
 require_once ROOT . '/Utils/Database.php';
 require_once ROOT . '/Models/User.php';
 
-$errors = [];
+if (empty($_GET['idPatient']) || !filter_input(INPUT_GET, 'idPatient', FILTER_VALIDATE_INT)) {
+    header('location: liste-patients.php');
+    exit();
+}
+//Accès à la page update via un get
+$idPatient = filter_input(INPUT_GET, 'idPatient', FILTER_SANITIZE_NUMBER_INT);
 $nameRegex = '/\w+/';
 //$TelRegex = "/^[0-9]{2}(\.[0-9]{2}){4}$/";
 $TelRegex = "/^[0-9]{10}$/";
 //$AgeRegex = "/^[0-9]{10}$/";
 $AgeRegex = "/^([0-9]{4})(\-{1})([0-9]{2})(\-{1})([0-9]{2})$/";
-$passwordRegex = '/^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])?[\w!@#$%^&*]{8,}$/';
-$password = '';
-
-if (isset($_POST['checkmail'])) {
-    $email = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING));
-    if (filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
-        $user = new User();
-        $user->email = $email;
-        if ($user->checkEmail()) {
-            exit('notOk');
-        }
-        exit('ok');
-    }
-}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $isSubmit = true;
@@ -56,20 +47,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //    if (empty($message) || !preg_match($nameRegex, $message)) {
 //        $errors['message'] = 'La réponse à la question n\'est pas valide!';
 //    }
-
-    if (count($errors) == 0) {
-        
-        $user = new User('', $firstname, $lastname, $age, $phone, $email, 2);
-
-        try {
-            $user->create();
-            
-        } catch (PDOException $ex) {
-            var_dump($ex);
-            echo 'La création du compte a échouée !' . $ex->getMessage();
-            die();
-        }
-    }
-   
 }
-require_once ROOT . '/Views/contact.php';
+$idPatient = filter_input(INPUT_GET, 'idPatient', FILTER_SANITIZE_NUMBER_INT);
+if (isset($_POST['idPatient'])) {
+    if (!filter_input(INPUT_POST, 'idPatient', FILTER_VALIDATE_INT) || $_POST['idPatient'] <= 0) {
+        $errors['idPatient'] = 'Ce patient n\'existe pas';
+    }
+}
+//On crée un nouveau patient
+$patient = new User();
+$patient->id = $idPatient;
+////On vérifie si le formulaire de mise à jour a été posté (POST)
+//if ($isSubmitted && count($errors) == 0) {
+//    $patient->firstname = $firstname;
+//    $patient->lastname = $lastname;
+//    $patient->birthdate = $birthdate;
+//    $patient->phone = $phone;
+//    $patient->mail = $mail;
+//    if (!$patient->update()) {
+//        require_once '../Views/errors/503.php';
+//        exit();
+//    }
+//    $success = true;
+//    $sleep = 4;
+//    header('Refresh:' . $sleep . ';http://www.naturogaia.com/update-clients.php?idPatient='. $patient->id);
+//}
+//if (!$patient->getOneById()) {
+//    echo 'Ce patient n\'existe pas';
+//    $sleep = 4;
+//    header('Refresh:' . $sleep . ';http://www.naturogaia.com/update-clients.php');
+//}
+
+require_once ROOT . '/Views/update-clients.php';
+

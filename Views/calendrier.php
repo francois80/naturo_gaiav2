@@ -64,7 +64,7 @@ for ($year = $currentYear; $year <= $NextYear; $year ++):
                             }
                             //sinon on écrit le numéro du jour dans la cellule
                             else {
-                                
+                                //si le jour est inférieur ou = à la date du jour on grise
                                if($numDay >= $day && $numMonth == $currentMonth){ ?> 
                                   <td class="bg-light"><?= $day ?></td>
                                <?php

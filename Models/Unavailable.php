@@ -23,7 +23,7 @@ class Unavailable {
     } 
     
     public function getNotOpen() {
-        //Le code toutes les jours de fermetures
+        //Le code de tous les jours de fermetures
         $sql ='SELECT `day_close`, `day_close_begin`, `day_close_end` FROM `unavailable`';
         $unavailableList = [];
         $req = $this->db->query($sql);
@@ -35,7 +35,7 @@ class Unavailable {
         {
             echo ' cohioihhhmhm';
         }
-        var_dump($unavailableList);
+        //var_dump($unavailableList);
         return $unavailableList;
     }  
 

@@ -6,9 +6,11 @@
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js">
     </script>
+     <script src="../public/assets/js/script.js"></script>
+    <script src="../public/assets/js/jquery.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.12.0/js/mdb.min.js"></script>
-    <script src="../assets/js/script.js"></script>
+   
 </body>
 
 </html>

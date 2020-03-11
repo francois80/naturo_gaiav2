@@ -79,20 +79,21 @@ echo 'crénaux horaires dispo l\'après-midi : de '. gmdate('H:i',$hafternoonBeg
 
 $appointment = new Appointments();
 $unavailable = new Unavailable();
-
+//stocke tous les rendez-vous
 $appointmentsList = $appointment->getAll();
-
+//stocke les date indisponibles 
 $unavalaibleList = $unavailable->getNotOpen();
- //var_dump($unavalaibleList);
-if (count($appointmentsList) > 0) {
-   foreach ($appointmentsList AS $key => $appointment_info){
-    echo $appointment_info['JourRDV']. ' '. $appointment_info['heure_debut']. ' '. $appointment_info['heure_fin']. '<br>';
-   }
-}       
 
-if (count($unavalaibleList) > 0) {
-   foreach ($unavalaibleList AS $key => $unavalaible_info){
-    echo $unavalaible_info['day_close']. ' '. $unavalaible_info['day_close_begin']. ' '. $unavalaible_info['day_close_end']. '<br>';
-   }
-}  
+
+//if (count($appointmentsList) > 0) {
+//   foreach ($appointmentsList AS $key => $appointment_info){
+//    echo $appointment_info['JourRDV']. ' '. $appointment_info['heure_debut']. ' '. $appointment_info['heure_fin']. '<br>';
+//   }
+//}       
+//
+//if (count($unavalaibleList) > 0) {
+//   foreach ($unavalaibleList AS $key => $unavalaible_info){
+//    echo $unavalaible_info['day_close']. ' '. $unavalaible_info['day_close_begin']. ' '. $unavalaible_info['day_close_end']. '<br>';
+//   }
+//}  
 require_once ROOT . '/Views/calendrier.php';
