@@ -35,4 +35,41 @@ class Appointments {
         return $appointmentList;
     }  
     
+    public function getAllByUser() {
+        //Le code toutes les dates de rendez-vous
+        $sql ='SELECT `daterdv` AS JourRDV, `hour_begin` AS heure_debut, `hour_end` AS heure_fin, `id_speciality` FROM `appointments` WHERE `id_user` = :id';
+        $appointmentList = [];
+        $req = $this->db->prepare($sql);
+        $req->bindValue(':id', $this->idUser, PDO::PARAM_INT);
+        echo $this->idUser;
+        if ($req->execute()) {
+                if ($req instanceOf PDOStatement) {
+                    // Collection des données dans un tableau associatif (FETCH_ASSOC)
+                    $appointmentList = $req->fetchAll(PDO::FETCH_ASSOC);
+                }
+                return $appointmentList;
+            }
+    }
+    
+    public function delete() {
+        //Le code pour supprimer un client
+      $sql = 'DELETE FROM `appointments` WHERE `id_user` = :idPatient AND `hour_begin` = :hourbegin';
+      $req = $this->db->prepare($sql);
+      $req->bindValue(':idPatient', $this->idUser, PDO::PARAM_INT);
+      $req->bindValue(':hourbegin', $this->hourBegin, PDO::PARAM_STR);
+      $req->execute();
+            
+    }
+
+    public function deletePatientAppointment(){
+      $sql = 'DELETE FROM `users` WHERE `id_user` = :i';
+      $sth = $this->db->prepare($sql);
+      $sth->bindValue(':id', $this->idUser, PDO::PARAM_INT);
+      if ($sth->execute() && $sth->rowCount() > 0) {
+        return $this;
+      }
+      return false;
+    }
+    
+    
 }

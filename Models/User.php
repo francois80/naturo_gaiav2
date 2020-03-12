@@ -12,6 +12,9 @@ class User {
     public $id_role;
     public $register_at;
     public $role_id = 2;
+    public $date_rdv;
+    public $hour_begin;
+    public $hour_end;
     public $db;
 
     public function __construct($id_user = '', $_password = '', $_lastname = '', $_firstname = '',$birth_date ='', $phone = '', $_email = '', $id_role = '') {
@@ -128,9 +131,43 @@ class User {
            return $this;
            
         } 
-       
-    }
+      }
     
+        public function getOneForDelete() {
+        $sql = 'SELECT `users`.`id_user`, `lastname`, `firstname`, `age`, `city`, `email`, `phone`, `daterdv`, `hour_begin`, `hour_end`, `speciality` FROM `users` JOIN `appointments` ON `appointments`.`id_user` = `users`.`id_user` JOIN `specialities` ON `appointments`.`id_speciality` = `specialities`. `id_speciality` AND `users`.`id_user` = :id'; 
+        
+        $req = $this->db->prepare($sql);
+        $req->bindValue(':id', $this->id_user, PDO::PARAM_INT);
+        //$req->bindValue(':email', $this->email, PDO::PARAM_STR);
+
+        if ($req->execute()) {
+            $user = $req->fetch(PDO::FETCH_OBJ);
+            $this->id_user = $user->id_user;
+            $this->firsname = $user->firstname;
+            $this->lastname = $user->lastname;
+            $this->birthdate = $user->age;
+            $this->phone = $user->phone;
+            $this->email = $user->email;
+            $this->password = $user->psw;
+            $this->role_id = $user->id_role;
+            $this->date_rdv = $user->date_rdv;
+            $this->hour_begin = $user->hour_begin;
+            $this->hour_end= $user->hour_end;
+           
+           return $this;
+           
+        } 
+        }
+      
+        public function delete() {
+        //Le code pour supprimer un client
+      $sql = 'DELETE FROM `users` WHERE `id_user` = :id';
+      $req = $this->db->prepare($sql);
+      $req->bindValue(':id', $this->id_user, PDO::PARAM_INT);
+      $req->execute();
+            
+    }
+        
 //    public function getOneById() {
 //        //Le code sélectionnant un patient
 //        $sql = 'SELECT `id_user`, `lastname`, `firstname`, `birthdate`, `phone`, `email` FROM `users` WHERE `id_user` = :id';
