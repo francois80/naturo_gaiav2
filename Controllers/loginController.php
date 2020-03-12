@@ -13,16 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = trim($_POST['password']);
     if (count($errors) == 0) {
         $user = new User();
-
         $user->email = $email;
-        
         try {
-            $user->getOne();
+            $user->getOne(); //donne les infos pour un utilisateur  
             if (password_verify($password, $user->password)) {
                 $_SESSION['auth']['login'] = true;
                 $_SESSION['auth']['id'] = $user->id_user;
                 $_SESSION['auth']['lastname'] = $user->lastname;
-                header('Location:dashboard.php');
+                header('Location:dashboard.php');//redirige si ok
                 exit();
             } else {
                 $errors['login'] = 'l\'identifiant ou le mot de passe est incorrect !';

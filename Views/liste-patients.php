@@ -9,12 +9,12 @@ require_once ROOT . '/Views/nav.php';
     <form method="post" action="#">
         <div class="form-group row ">
             <input type="text" class="form-control col-7" placeholder="Sélectionnez un Nom" name="search">
-            <input type="submit" value="Recherche" name="search-submit" class="btn btn-sm btn-outline-primary ml-2 col-4">
+            <input type="submit" value="Recherche" name="search-submit" class="btn btn-sm btn-outline-primary ml-2">
         </div> 
     </form>
 </div>
 <div class="row justify-content-center">
-    <?php if (count($patientsList) == 0) { ?>
+    <?php if (count($usersList) == 0) { ?>
         <p>Pas de patients</p>
     <?php } else {
         ?>
@@ -31,15 +31,15 @@ require_once ROOT . '/Views/nav.php';
             </thead>
             <tbody>
                 <?php
-                if (count($patientsList) > 0) {
-                    foreach ($patientsList as $patientId => $patient):
+                if (count($usersList) > 0) {
+                    foreach ($usersList as $userId => $user_info):
                         ?>
                         <tr>
-                            <td><?= $patientId + 1 ?></td>
-                            <td><?= $patient['lastname'] ?></td>
-                            <td><?= $patient['firstname'] ?></td>
-                            <td><a href="update-clients.php?idPatient=<?= $patient['id_user'] ?>" class="btn btn-sm btn-primary" >**Modifier</a></td>
-                            <td><a href="delete-clients.php?idPatient=<?= $patient['id_user'] ?>">Supprimer</a></td>
+                            <td><?= $userId + 1 ?></td>
+                            <td><?= $user_info['lastname'] ?></td>
+                            <td><?= $user_info['firstname'] ?></td>
+                            <td><a href="update-clients.php?idPatient=<?= $user_info['id_user'] ?>" class="btn btn-sm btn-primary" >Modifier</a></td>
+                            <td><a href="delete-clients.php?idPatient=<?= $user_info['id_user'] ?>">Supprimer</a></td>
                         </tr>
                         <?php
                     endforeach;
@@ -61,4 +61,4 @@ require_once ROOT . '/Views/nav.php';
     <?php } ?>
 </div>
 <?php
-require_once 'footer.php';
+require_once ROOT . '/Views/footer.php';

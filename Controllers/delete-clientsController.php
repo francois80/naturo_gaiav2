@@ -1,5 +1,9 @@
 <?php
-session_start();
+// protection de la page par la session auth
+if(!isset($_SESSION['auth']['login'])){
+    header('Location:login.php');
+    exit();
+}
 require_once ROOT . '/Utils/Database.php';
 require_once ROOT . '/Models/User.php';
 require_once ROOT . '/Models/Appointment.php';

@@ -5,19 +5,20 @@ require_once ROOT . '/Models/User.php';
 
 $errors = [];
 $nameRegex = '/\w+/';
-//$TelRegex = "/^[0-9]{2}(\.[0-9]{2}){4}$/";
-$TelRegex = "/^[0-9]{10}$/";
+//$TelRegex = "/^[0-9]{2}(\.[0-9]{2}){4}$/"; // (06.11.22.33.44)
+$TelRegex = "/^[0-9]{10}$/"; // (0322445566)
 //$AgeRegex = "/^[0-9]{10}$/";
-$AgeRegex = "/^([0-9]{4})(\-{1})([0-9]{2})(\-{1})([0-9]{2})$/";
-$passwordRegex = '/^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])?[\w!@#$%^&*]{8,}$/';
+$AgeRegex = "/^([0-9]{4})(\-{1})([0-9]{2})(\-{1})([0-9]{2})$/"; // format américain 1987-11-26
+$passwordRegex = '/^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])?[\w!@#$%^&*]{8,}$/'; //Maj ou chiffres + minuscule ou caractère spéciaux
 $password = '';
 
+// Vérification que l'email n'existe pas déja dans la base
 if (isset($_POST['checkmail'])) {
     $email = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING));
     if (filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
         $user = new User();
         $user->email = $email;
-        if ($user->checkEmail()) {
+        if ($user->checkemail()) {
             exit('notOk');
         }
         exit('ok');
@@ -59,13 +60,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (count($errors) == 0) {
         
-        $user = new User('', $firstname, $lastname, $age, $phone, $email, 2);
+        $user = new User('', '', $firstname, $lastname, $age, $phone, $email, 2);
 
         try {
-            $user->create();
+            if ($user->checkemail()) {  //vérification pas email dans la table
+                 $sleep = 1;
+                 header('Refresh:' . $sleep . ';http://www.naturogaia.com/home.hp');
+            }
+            else{
+               $user->create();
+            }
             
         } catch (PDOException $ex) {
-            var_dump($ex);
+            //var_dump($ex);
             echo 'La création du compte a échouée !' . $ex->getMessage();
             die();
         }

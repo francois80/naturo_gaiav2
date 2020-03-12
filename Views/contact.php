@@ -6,16 +6,9 @@ require_once ROOT . '/Views/nav.php';
     <div class="row justify-content-center">
         <div class="col-md-6 card">
             <div class="card-header .z-depth-4 info-color">
-                <h2 class="text-center font-weight-bold text-white">Inscription</h2>
+                <h3 class="text-center font-weight-bold text-white">Rendez-vous</h3>
             </div>
             <form class="card-body bg-softGreen" method="POST" action="" novalidate="">
-                <div class="form-group md-form">
-                    <label for="firstname">Prénom : </label>
-                    <input  autocomplete="false" name="firstname" type="text" class="form-control <?= (isset($isSubmit) && !isset($errors['firstname'])) ? 'is-valid' : '' ?> <?= (isset($isSubmit) && isset($errors['firstname'])) ? 'is-invalid' : '' ?>" id="firstname" required>
-                    <div class="invalid-feedback">
-                    <?= $errors['firstname'] ?? '' ?> !
-                    </div>
-                </div>
                 <div class="form-group md-form">
                     <label for="lastname">Nom : </label>
                     <input  autocomplete="false" name="lastname" type="text" class="form-control <?= (isset($isSubmit) && !isset($errors['lastname'])) ? 'is-valid' : '' ?> <?= (isset($isSubmit) && isset($errors['lastname'])) ? 'is-invalid' : '' ?>" id="lastname" required>
@@ -23,6 +16,13 @@ require_once ROOT . '/Views/nav.php';
                     <?= $errors['lastname'] ?? '' ?> !
                     </div>
                 </div>
+                <div class="form-group md-form">
+                    <label for="firstname">Prénom : </label>
+                    <input  autocomplete="false" name="firstname" type="text" class="form-control <?= (isset($isSubmit) && !isset($errors['firstname'])) ? 'is-valid' : '' ?> <?= (isset($isSubmit) && isset($errors['firstname'])) ? 'is-invalid' : '' ?>" id="firstname" required>
+                    <div class="invalid-feedback">
+                    <?= $errors['firstname'] ?? '' ?> !
+                    </div>
+                </div>  
                 <div class="form-group md-form">
                     <label for="age">Date de naissance : </label>
                     <input  autocomplete="false" name="age" type="text" class="form-control <?= (isset($isSubmit) && !isset($errors['age'])) ? 'is-valid' : '' ?> <?= (isset($isSubmit) && isset($errors['age'])) ? 'is-invalid' : '' ?>" id="age" required>
@@ -64,4 +64,4 @@ require_once ROOT . '/Views/nav.php';
     </div>
 </div>
 <?php
-require_once 'footer.php';
+require_once ROOT . '/Views/footer.php';

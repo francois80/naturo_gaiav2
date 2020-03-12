@@ -1,6 +1,6 @@
 <ifModule mod_rewrite.c>
     # On active le mod_rewrite
     RewriteEngine  on
-
+#on prend tout après le . est on reidrrige vers l'autre htaccess
     RewriteRule ^(.*) public/$1 [NC,L]
 </ifModule>
