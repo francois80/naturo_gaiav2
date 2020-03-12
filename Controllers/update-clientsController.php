@@ -7,6 +7,10 @@ if (empty($_GET['idPatient']) || !filter_input(INPUT_GET, 'idPatient', FILTER_VA
     header('location: liste-patients.php');
     exit();
 }
+else{
+  $id_user  = filter_input(INPUT_GET, 'idPatient', FILTER_SANITIZE_NUMBER_INT);
+}
+    
 //Accès à la page update via un get
 $idPatient = filter_input(INPUT_GET, 'idPatient', FILTER_SANITIZE_NUMBER_INT);
 $nameRegex = '/\w+/';
@@ -48,35 +52,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //        $errors['message'] = 'La réponse à la question n\'est pas valide!';
 //    }
 }
+
+
+   $user = new User();
+if ($isSubmit && count($errors) == 0) {
+    $user->id_user = intval($id_user);
+    $user->firsname = $firstname;
+    $user->lastname = $lastname;
+    $user->birthdate = $age;
+    $user->phone = intval($phone);
+    $user->email = $email;
+    //$user->update();
+    var_dump($user);
+    if ($user->update()) {
+        $success = true;
+        $sleep = 1;
+        header('Refresh:' . $sleep . ';http://www.naturogaia.com/liste-patients.php');
+    }
+    else{
+        die('not ok');
+        require_once ROOT . '/Views/errors/503.php';
+        exit();
+    }
+
+
+}
+
 $idPatient = filter_input(INPUT_GET, 'idPatient', FILTER_SANITIZE_NUMBER_INT);
 if (isset($_POST['idPatient'])) {
     if (!filter_input(INPUT_POST, 'idPatient', FILTER_VALIDATE_INT) || $_POST['idPatient'] <= 0) {
         $errors['idPatient'] = 'Ce patient n\'existe pas';
     }
 }
-//On crée un nouveau patient
+//On instance patient pour afficher l'utilisateur avec getOne()
 $patient = new User();
-$patient->id = $idPatient;
-////On vérifie si le formulaire de mise à jour a été posté (POST)
-//if ($isSubmitted && count($errors) == 0) {
-//    $patient->firstname = $firstname;
-//    $patient->lastname = $lastname;
-//    $patient->birthdate = $birthdate;
-//    $patient->phone = $phone;
-//    $patient->mail = $mail;
-//    if (!$patient->update()) {
-//        require_once '../Views/errors/503.php';
-//        exit();
-//    }
-//    $success = true;
-//    $sleep = 4;
-//    header('Refresh:' . $sleep . ';http://www.naturogaia.com/update-clients.php?idPatient='. $patient->id);
-//}
-//if (!$patient->getOneById()) {
-//    echo 'Ce patient n\'existe pas';
-//    $sleep = 4;
-//    header('Refresh:' . $sleep . ';http://www.naturogaia.com/update-clients.php');
-//}
+$patient->id_user = filter_input(INPUT_GET, 'idPatient', FILTER_SANITIZE_NUMBER_INT);
+
+$patient->getOne();
 
 require_once ROOT . '/Views/update-clients.php';
 

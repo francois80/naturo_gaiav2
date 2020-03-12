@@ -1,6 +1,7 @@
 <?php
 require_once ROOT . '/Views/header.php';
 require_once ROOT . '/Views/nav.php';
+
 ?>
 
 <h2 class="text-center my-4">Liste des patients</h2>
@@ -38,7 +39,7 @@ require_once ROOT . '/Views/nav.php';
                             <td><?= $patient['lastname'] ?></td>
                             <td><?= $patient['firstname'] ?></td>
                             <td><a href="update-clients.php?idPatient=<?= $patient['id_user'] ?>" class="btn btn-sm btn-primary" >**Modifier</a></td>
-                            <td><a href="../Controllers/delete-patientController.php?idPatient=<?= $patient['id'] ?>">Supprimer</a></td>
+                            <td><a href="delete-clients.php?idPatient=<?= $patient['id_user'] ?>">Supprimer</a></td>
                         </tr>
                         <?php
                     endforeach;

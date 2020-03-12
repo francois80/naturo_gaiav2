@@ -16,7 +16,7 @@ if(isset($success)){
             <form class="card-body bg-softGreen" method="POST" action="" novalidate="">
                 <div class="form-group md-form">
                     <label for="firstname">Prénom : </label>
-                    <input  autocomplete="false" name="firstname" type="text" class="form-control <?= (isset($isSubmit) && !isset($errors['firstname'])) ? 'is-valid' : '' ?> <?= (isset($isSubmit) && isset($errors['firstname'])) ? 'is-invalid' : '' ?>" id="firstname" value="<?= $patient->firstname ?>">
+                    <input  autocomplete="false" name="firstname" type="text" class="form-control <?= (isset($isSubmit) && !isset($errors['firstname'])) ? 'is-valid' : '' ?> <?= (isset($isSubmit) && isset($errors['firstname'])) ? 'is-invalid' : '' ?>" id="firstname" value="<?= $patient->firsname ?>">
                     <div class="invalid-feedback">
                     <?= $errors['firstname'] ?? '' ?> !
                     </div>
@@ -37,7 +37,7 @@ if(isset($success)){
                 </div>
                 <div class="form-group md-form">
                     <label for="phone">Télephone : </label>
-                    <input  autocomplete="false" name="phone" type="text" class="form-control <?= (isset($isSubmit) && !isset($errors['phone'])) ? 'is-valid' : '' ?> <?= (isset($isSubmit) && isset($errors['phone'])) ? 'is-invalid' : '' ?>" id="phone" value="<?= $patient->phone ?>">
+                    <input  autocomplete="false" name="phone" type="text" class="form-control <?= (isset($isSubmit) && !isset($errors['phone'])) ? 'is-valid' : '' ?> <?= (isset($isSubmit) && isset($errors['phone'])) ? 'is-invalid' : '' ?>" id="phone" value="0<?= $patient->phone ?>">
                     <div class="invalid-feedback">
                     <?= $errors['phone'] ?? '' ?> !
                     </div>
@@ -63,7 +63,7 @@ if(isset($success)){
                     <?= $errors['message'] ?? '' ?> !
                     </div>
                 </div>
-                <button class="btn btn-info btn-rounded" type="submit">S'inscrire</button>
+                <button class="btn btn-info btn-rounded" type="submit">Modifier</button>
             </form>
         </div>
     </div>

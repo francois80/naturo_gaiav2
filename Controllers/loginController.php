@@ -11,14 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $password = trim($_POST['password']);
-    echo ' ////$password = ' . $password;
     if (count($errors) == 0) {
         $user = new User();
 
         $user->email = $email;
+        
         try {
             $user->getOne();
-            var_dump($user);
             if (password_verify($password, $user->password)) {
                 $_SESSION['auth']['login'] = true;
                 $_SESSION['auth']['id'] = $user->id_user;

@@ -2,7 +2,7 @@
 
 class User {
 
-    public $id;
+    public $id_user;
     public $firsname;
     public $lastname;
     public $birthdate;
@@ -14,13 +14,14 @@ class User {
     public $role_id = 2;
     public $db;
 
-    public function __construct($_password = '', $_lastname = '', $_firstname = '',$birth_date ='', $phone = '', $_email = '', $id_role = '') {
+    public function __construct($id_user = '', $_password = '', $_lastname = '', $_firstname = '',$birth_date ='', $phone = '', $_email = '', $id_role = '') {
+        $this->id_user = $id_user;
+        $this->password = $_password;
         $this->firsname = $_firstname;
         $this->lastname = $_lastname;
         $this->birthdate= $birth_date;
         $this->phone = $phone;
         $this->email = $_email;
-        $this->password = $_password;
         $this->role_id = $id_role;
         $this->db = Database::getInstance();
     }
@@ -53,7 +54,7 @@ class User {
          if ($req->execute()) {
             $patientsList = $req->fetchAll(PDO::FETCH_ASSOC);
         }
-        var_dump($patientsList);
+       
         return $patientsList;
     }
     
@@ -93,36 +94,41 @@ class User {
     }
     
     public function update() {
-        $sql = 'UPDATE `patients` SET `lastname`= :lastname, `firstname`= :firstname, `birthdate`= :birthdate , `phone`= :phone, `email`= :email WHERE `id` = :id';
-        $sth = $this->db->prepare($sql);
-        $sth->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
-        $sth->bindValue(':firstname', $this->firstname, PDO::PARAM_STR);
-        $sth->bindValue(':birthdate', $this->birthdate, PDO::PARAM_STR);
-        $sth->bindValue(':phone', $this->phone, PDO::PARAM_INT);
-        $sth->bindValue(':email', $this->email, PDO::PARAM_STR);
-        $sth->bindValue(':id', $this->id, PDO::PARAM_INT);
-        if ($sth->execute()) {
-            return $this;
-        }
-        return false;
+       $sql = 'UPDATE `users` SET `lastname`= :lastname, `firstname`= :firstname, `age`= :birthdate, `phone`= :phone, `email`= :email WHERE `id_user` = :id';
+        $req = $this->db->prepare($sql);
+        $req->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
+        $req->bindValue(':firstname', $this->firsname, PDO::PARAM_STR);
+        $req->bindValue(':birthdate', $this->birthdate, PDO::PARAM_STR);
+        $req->bindValue(':phone', $this->phone, PDO::PARAM_INT);
+        $req->bindValue(':email', $this->email, PDO::PARAM_STR);
+        $req->bindValue(':id', $this->id_user, PDO::PARAM_INT);
+       
+        return $req->execute();
+        
     }
     
     public function getOne() {
         //$sql = 'SELECT `id`,`firstname`,`lastname`,`email`,`password`,`role_id` FROM `users` WHERE `id` = :id OR `email` = :email';
-        $sql = 'SELECT `id_user`,`psw`,`lastname`,`firstname`,`email`,`id_role` FROM `users` WHERE `id_user` = :id OR `email` = :email';
+        $sql = 'SELECT `id_user`,`psw`,`lastname`,`firstname`,`age`,`phone`,`email`,`id_role` FROM `users` WHERE `id_user` = :id OR `email` = :email';
         $req = $this->db->prepare($sql);
-        $req->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $req->bindValue(':id', $this->id_user, PDO::PARAM_INT);
         $req->bindValue(':email', $this->email, PDO::PARAM_STR);
 
         if ($req->execute()) {
             $user = $req->fetch(PDO::FETCH_OBJ);
+            $this->id_user = $user->id_user;
             $this->firsname = $user->firstname;
             $this->lastname = $user->lastname;
+            $this->birthdate = $user->age;
+            $this->phone = $user->phone;
             $this->email = $user->email;
             $this->password = $user->psw;
             $this->role_id = $user->id_role;
-            return $this;
-        }
+           
+           return $this;
+           
+        } 
+       
     }
     
 //    public function getOneById() {
