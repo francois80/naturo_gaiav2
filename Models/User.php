@@ -182,6 +182,11 @@ class User {
         }
     }
 
+    /**
+     * supprime un utilisateur de users
+     * à utiliser après avoir supprimer les rendez-vous de l'utilisateur dans appointments
+     * 
+     */
     public function delete() {
         //Le code pour supprimer un client
         $sql = 'DELETE FROM `users` WHERE `id_user` = :id';

@@ -71,7 +71,7 @@ if ($isSubmit && count($errors) == 0) {
     if ($user->update()) {
         $success = true;
         $sleep = 1;
-        header('Refresh:' . $sleep . ';http://www.naturogaia.com/liste-patients.php');
+        header('Refresh:' . $sleep . ';http://naturogaia.am.manusien-ecolelamanu.fr/liste-patients.php');
     }
     else{
         die('not ok');

@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
             if ($user->checkemail()) {  //vérification pas email dans la table
                  $sleep = 1;
-                 header('Refresh:' . $sleep . ';http://www.naturogaia.com/home.hp');
+                 header('Refresh:' . $sleep . ';http://naturogaia.am.manusien-ecolelamanu.fr/home.hp');
             }
             else{
                $user->create();
