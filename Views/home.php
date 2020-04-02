@@ -1,43 +1,63 @@
 <?php
-
 require_once ROOT . '/Views/header.php';
-require_once ROOT . '/Views/nav.php';
+require_once ROOT . '/Views/aside_left.php'; 
 ?>
-<div id="content" class="row justify-content-around  margeTop">
-    <!-- DEBUT TITRE -->
-    <div class="container-fluid">
-        <div class="row">
 
-            <!-- FIN TITRE -->
-            <!-- Début Bloc large 1 -->
-            <div class="container d-md-flex">
-                <div class="card mb-1 bloc_Large">
-                    <div class="no-gutters">
-                        <img src="../assets/images/nature.jpg" class="img_small img-fluid" alt="nature">
-                        <h4 class="card-title">Le naturopathe éducateur de santé :</h4>
-                        <p class="card-text">Selon l'Organisation Mondiale de la Santé "la naturopathie est un ensemble de méthodes de soins visant à renforcer les défenses de l'organisme par des moyens considérés comme naturels et biologiques".
-                            Hippocrate a mis en place 5 principes  :
-                        </p>
-                        <ol>
-                            <li>Ne pas nuire (primum non nocere)</li>
-                            <li>La nature est guérisseuse (vis medicatrix naturae)</li>
-                            <li>Identifier et traiter la cause (tolle causam)</li>
-                            <li>Détoxifier et purifier l'organisme (deinde purgare)</li>
-                            <li>La naturopathie enseigne (docere)</li>
-                        </ol>
-                        <p>
-                            La naturopathie est dite "holistique" car elle va regarder la personne dans sa globalité. Le naturopathe prend en compte le corps, l'esprit, les émotions, l'environnement ainsi que la spiritualité de la personne. Le praticien cherche la cause et accompagne vers le chemin de la santé en stimulant, régénérant et en optimisant l'énergie vitale. Tout cela pour aider le corps à s'auto guérir car comme le disait Hippocrate " La force qui est en chacun de nous est notre lus grand médecin". 
-                        <p></p>
-                        C’est une science fondamentale qui englobe un enseignement et des techniques d'éducation, de prévention et de soins, à l'aide de méthodes naturelles (équilibre alimentaire, hygiène de vie, phytothérapie, aromathérapie, exercices...) et de l'hygiène vitale, afin d'optimiser la santé intégrale de l'individu. Le naturopathe est donc un éducateur de santé.
-                        La naturopathie ne se substitue pas à la médecine conventionnelle mais elle la complète, avec pour principes essentiels : ne jamais nuire et accompagner le retour ou le maintien de la santé globale.
-                        Votre Naturopathe est là pour vous accompagner vers une meilleure santé et hygiène de vie. Elle ne remplacera pas votre médecin  et, par conséquent,  ne vous incitera jamais à arrêter la prise d'un traitement déjà prescrit ou en cours.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+<section>
+    
+    <div> 
+        <h4 class="card-title">ETRE ACTEUR DE SA SANTE</h4>
+        <p class="card-text">
+            Bienvenue sur le site DE NATURO GAIA<br>
+            Selon l'Organisation Mondiale de la Santé "la naturopathie est un ensemble de méthodes de soins visant à renforcer les défenses de l'organisme par des moyens considérés comme naturels et biologiques".
+        </p>
+     </div>
+    <p></p>
+    <div>
+        <h4>Mes outils pour vous accompagner</h4>
     </div>
+    <div id="sommaire" class="row">
+        <p><img src="../assets/images/alim_pyramide.png" class="img_small img-fluid" alt="nature">ALIMENTATION</p>
+        <p><img src="../assets/images/bougies.jpeg" class="img_small img-fluid" alt="nature">RELATION AIDE RELAXATION</p>
+        <p><img src="../assets/images/bourgeon.jpeg" class="img_small img-fluid" alt="nature">MASSAGE BIEN ETRE</p>
+        <p><img src="../assets/images/fleurs.jpeg" class="img_small img-fluid" alt="nature">AROMATHERAPIE/GEMMOTHERAPIE</p>
+        <p><img src="../assets/images/head.jpg" class="img_small img-fluid" alt="nature">IRIDOLOGIE</p>
+        <p><img src="../assets/images/cerises.jpeg" class="img_small img-fluid" alt="nature">FLEURS DE BACH/BOL AIR JACQUIER</p>
+        <p><img src="../assets/images/nature.jpg" class="img_small img-fluid" alt="nature">ATELIERS</p>
+    </div>
+    
+</section>
 
-</div>
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript">
+/**
+ * Animation de la fusée avec Javascript
+**/
+jQuery(document).ready(function($){
+    // Stockage des références des différents éléments dans des variables
+    rocket     = $('#asideLeft');
+    
+    // Calcul de la marge entre le haut du document et #rocket_mobile
+    fixedLimit = rocket.offset().top - parseFloat(rocket.css('marginTop').replace(/auto/,10));
+ 
+    // On déclenche un événement scroll pour mettre à jour le positionnement au chargement de la page
+    $(window).trigger('scroll');
+ 
+    $(window).scroll(function(event){
+        // Valeur de défilement lors du chargement de la page
+        windowScroll = $(window).scrollTop();
+ 
+        // Mise à jour du positionnement en fonction du scroll
+        if( windowScroll >= fixedLimit ){
+            rocket.addClass('fixed');
+        } else {
+            rocket.removeClass('fixed');
+        }
+    });
+});
+</script>
 <?php
 require_once ROOT . '/Views/footer.php';

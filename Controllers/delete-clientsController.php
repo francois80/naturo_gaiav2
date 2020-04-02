@@ -21,7 +21,7 @@ if(!empty(filter_input(INPUT_GET, 'hourBegin', FILTER_SANITIZE_STRING))){
     }  
 }
  
-if(!empty($_GET['allInfo'])){
+if(!empty($_GET['allInfo'])){  // boléen indique si on veut supprimer le client en totalité rendez vous compris
     $appointment = new Appointments();
     $user = new User();
     $appointment->idUser = filter_input(INPUT_GET, 'idPatient', FILTER_SANITIZE_NUMBER_INT);
@@ -33,8 +33,8 @@ if(!empty($_GET['allInfo'])){
     
     try {
     $user->db->beginTransaction();
-    $appointment->deleteAllAppointment();
-    $user->delete();
+    $appointment->deleteAllAppointment(); //suppression tous les rendez-vous
+    $user->delete(); // suppression client
     $appointment->db->commit();
     $_SESSION['deletePatient']['success'] = true;
     $_SESSION['deletePatient']['name'] = $patient->firstname. ' '. $patient->lastname;

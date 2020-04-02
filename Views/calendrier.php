@@ -1,6 +1,6 @@
 <?php
 require_once ROOT . '/Views/header.php';
-require_once ROOT . '/Views/nav.php';
+
 ?>
 <div id="content" class="row justify-content-center margeTop border">
     <div class="container-fluid col-md-6">

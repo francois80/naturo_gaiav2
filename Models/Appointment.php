@@ -78,10 +78,10 @@ class Appointments {
      * penser à supprimer les rendez-vous de l'utilisateur dans la table appointments
      */
     public function deletePatientAppointment(){
-      $sql = 'DELETE FROM `users` WHERE `id_user` = :i';
-      $sth = $this->db->prepare($sql);
-      $sth->bindValue(':id', $this->idUser, PDO::PARAM_INT);
-      if ($sth->execute() && $sth->rowCount() > 0) {
+      $sql = 'DELETE FROM `users` WHERE `id_user` = :id';
+      $req = $this->db->prepare($sql);
+      $req->bindValue(':id', $this->idUser, PDO::PARAM_INT);
+      if ($req->execute() && $req->rowCount() > 0) {
         return $this;
       }
       return false;
